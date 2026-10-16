@@ -1,0 +1,873 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Stackly Sports Academy — Train Like It Counts</title><meta name="description" content="Stackly is a multi-sport academy with certified coaches, pro-grade facilities and a clear pathway from first session to elite competition."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M8 4h6l-4 24H4z' fill='%23E2492B'/%3E%3Cpath d='M16 4h6l-4 24h-6z' fill='%23F3F1EA'/%3E%3Cpath d='M24 4h6l-4 24h-6z' fill='%23D4FF3F'/%3E%3C/svg%3E"><style>/* ==========================================================================
+   STACKLY SPORTS ACADEMY
+   Design identity: "The Lane" — parallel track lanes in motion. Slanted
+   lane stripes drift behind heroes, count down in the loader, and cut the
+   section edges at a sprinter's angle.
+   ========================================================================== */
+:root{
+  --ink:#0D0E11; --ink-2:#16181D; --ink-3:#20232A;
+  --chalk:#F3F1EA; --chalk-dim:#E7E4DA; --white:#fff;
+  --clay:#E2492B; --clay-dark:#B9341A; --volt:#D4FF3F; --volt-dark:#A9D100;
+  --steel:#6B7078; --line:rgba(13,14,17,.12); --line-dark:rgba(243,241,234,.14);
+  --font-display:"Barlow Condensed","Arial Narrow",sans-serif;
+  --font-body:"Barlow",-apple-system,sans-serif;
+  --font-mono:"DM Mono",monospace;
+  --radius-sm:4px; --radius-md:12px; --radius-lg:20px;
+  --ease-out:cubic-bezier(.16,1,.3,1); --ease-soft:cubic-bezier(.65,0,.35,1);
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden;width:100%;max-width:100%}
+body{font-family:var(--font-body);background:var(--chalk);color:var(--ink);overflow-x:hidden;width:100%;max-width:100%;position:relative;-webkit-font-smoothing:antialiased;font-size:1.02rem}
+::selection{background:var(--volt);color:var(--ink)}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:800;font-style:italic;text-transform:uppercase;letter-spacing:.01em;line-height:1.02;color:var(--ink)}
+.font-mono{font-family:var(--font-mono)}
+:focus-visible{outline:2px solid var(--clay);outline-offset:3px}
+.container-xl{max-width:1280px;margin:0 auto;padding:0 24px}
+.eyebrow{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--clay);display:inline-flex;align-items:center;gap:10px;margin-bottom:16px}
+.eyebrow::before{content:"";width:30px;height:3px;background:var(--clay);transform:skewX(-30deg)}
+.on-dark .eyebrow,.hero .eyebrow,.page-hero .eyebrow{color:var(--volt)}
+.on-dark .eyebrow::before,.hero .eyebrow::before,.page-hero .eyebrow::before{background:var(--volt)}
+
+/* ---------- Preloader: countdown ---------- */
+#preloader{position:fixed;inset:0;z-index:9999;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;overflow:hidden}
+#preloader .lanes{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-evenly}
+#preloader .lanes i{display:block;height:2px;background:rgba(243,241,234,.08);transform-origin:left}
+#preloader .count{font-family:var(--font-display);font-style:italic;font-weight:800;font-size:clamp(6rem,22vw,13rem);color:var(--volt);line-height:1;position:relative}
+#preloader .load-label{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--chalk);opacity:.5;position:relative}
+
+
+/* ---------- Nav (always legible: dark glass) ---------- */
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:20px 0;transition:padding .35s var(--ease-out),background .35s,box-shadow .35s}
+.site-nav.is-scrolled{padding:12px 0;background:rgba(13,14,17,.92);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line-dark)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px}
+.brand .lane-mark{display:flex;gap:3px;transform:skewX(-20deg)}
+.brand .lane-mark i{display:block;width:5px;height:24px;background:var(--clay)}
+.brand .lane-mark i:nth-child(2){background:var(--chalk)}
+.brand .lane-mark i:nth-child(3){background:var(--volt)}
+.brand span.name{font-family:var(--font-display);font-weight:800;font-style:italic;text-transform:uppercase;font-size:1.5rem;color:var(--chalk);letter-spacing:.02em}
+.brand img.brand-logo{height:42px;width:auto;display:block}
+.nav-links{display:flex;gap:2px;list-style:none;margin:0;padding:0}
+.nav-links a{font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:1rem;color:rgba(243,241,234,.78);padding:10px 16px;position:relative;transition:color .25s}
+.nav-links a:hover{color:var(--volt)}
+.nav-links a.active{color:var(--volt)}
+.nav-links a.active::after{content:"";position:absolute;left:16px;right:16px;bottom:4px;height:3px;background:var(--clay);transform:skewX(-30deg)}
+.nav-actions{display:flex;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--font-display);font-weight:800;font-style:italic;text-transform:uppercase;letter-spacing:.06em;font-size:1rem;padding:13px 30px;border:2px solid transparent;cursor:pointer;transition:transform .3s var(--ease-out),box-shadow .3s,background .3s,color .3s,border-color .3s;white-space:nowrap;clip-path:polygon(8% 0,100% 0,92% 100%,0 100%)}
+.btn:active{transform:scale(.96)}
+.btn-clay{background:var(--clay);color:var(--white)}
+.btn-clay:hover{background:var(--clay-dark);color:var(--white)}
+.btn-volt{background:var(--volt);color:var(--ink)}
+.btn-volt:hover{background:var(--volt-dark);color:var(--ink)}
+.btn-dark{background:var(--ink);color:var(--chalk)}
+.btn-dark:hover{background:var(--clay);color:var(--white)}
+.btn-ghost{background:rgba(243,241,234,.1);color:var(--chalk)}
+.btn-ghost:hover{background:var(--chalk);color:var(--ink)}
+.btn-ghost-dark{background:rgba(13,14,17,.08);color:var(--ink)}
+.btn-ghost-dark:hover{background:var(--ink);color:var(--chalk)}
+.btn-sm{padding:9px 22px;font-size:.9rem}
+.btn-block{width:100%}
+.btn-magnetic{position:relative}
+.nav-burger{display:none;width:44px;height:44px;border:1px solid var(--line-dark);background:transparent;align-items:center;justify-content:center;flex-direction:column;gap:5px;cursor:pointer}
+.nav-burger span{width:18px;height:2px;background:var(--chalk);transition:transform .3s var(--ease-out),opacity .3s}
+.nav-burger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.is-open span:nth-child(2){opacity:0}
+.nav-burger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-panel{position:fixed;inset:0;z-index:999;background:var(--ink);display:flex;flex-direction:column;justify-content:center;padding:32px;clip-path:polygon(100% 0,100% 0,100% 0,100% 0);transition:clip-path .6s var(--ease-soft);pointer-events:none}
+.mobile-panel.is-open{clip-path:polygon(0 0,100% 0,100% 100%,0 100%);pointer-events:auto}
+.mobile-panel ul{list-style:none;padding:0;margin:0 0 30px}
+.mobile-panel a.link{font-family:var(--font-display);font-weight:800;font-style:italic;text-transform:uppercase;font-size:2.4rem;color:var(--chalk);display:block;padding:8px 0;border-bottom:1px solid var(--line-dark)}
+.mobile-panel .mp-actions{display:flex;gap:12px;flex-wrap:wrap}
+@media(max-width:991px){.nav-links{display:none}.nav-burger{display:flex}.nav-actions .btn{display:none}}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;padding:170px 0 130px;background:var(--ink);color:var(--chalk);overflow:hidden}
+.lane-bg{position:absolute;inset:0;overflow:hidden;background:repeating-linear-gradient(105deg,transparent 0 78px,rgba(243,241,234,.045) 78px 81px);pointer-events:none}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:70px;background:var(--chalk);clip-path:polygon(0 100%,100% 0,100% 100%)}
+.hero .row{position:relative;z-index:2}
+.hero h1{color:var(--chalk);font-size:clamp(3.4rem,8vw,7rem);margin-bottom:22px}
+.hero h1 .outline{color:transparent;-webkit-text-stroke:2px var(--volt)}
+.hero h1 .clay{color:var(--clay)}
+.hero p.lead{color:rgba(243,241,234,.75);font-size:1.15rem;max-width:480px;margin-bottom:34px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.hero-stats{display:flex;gap:44px;margin-top:56px;flex-wrap:wrap}
+.hero-stats b{display:block;font-family:var(--font-display);font-style:italic;font-weight:800;font-size:2.8rem;color:var(--volt);line-height:1}
+.hero-stats span{font-family:var(--font-mono);font-size:.7rem;color:rgba(243,241,234,.55);letter-spacing:.08em}
+.hero-photo-wrap{position:relative}
+.hero-photo{aspect-ratio:4/5;overflow:hidden;clip-path:polygon(14% 0,100% 0,86% 100%,0 100%);background:var(--ink-3)}
+.hero-photo img{width:100%;height:100%;object-fit:cover}
+.hero-float{position:absolute;background:var(--chalk);color:var(--ink);padding:16px 20px;display:flex;gap:14px;align-items:center;box-shadow:0 24px 50px -20px rgba(0,0,0,.6);border-left:5px solid var(--clay)}
+.hero-float.f1{left:8px;bottom:50px}
+.hero-float.f2{right:0;top:30px;border-left-color:var(--volt-dark)}
+.hero-float strong{display:block;font-family:var(--font-display);font-style:italic;font-weight:800;font-size:1.4rem;text-transform:uppercase;line-height:1}
+.hero-float span{font-size:.78rem;color:var(--steel)}
+
+.page-hero{position:relative;padding:160px 0 100px;background:var(--ink);color:var(--chalk);overflow:hidden}
+.page-hero::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:50px;background:var(--chalk);clip-path:polygon(0 100%,100% 0,100% 100%)}
+.page-hero h1{color:var(--chalk);font-size:clamp(2.8rem,6.5vw,5.4rem);max-width:900px}
+.page-hero p{color:rgba(243,241,234,.72);max-width:560px;font-size:1.1rem;margin-top:16px}
+.page-hero .crumb{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(243,241,234,.45)}
+.page-hero .container-xl{position:relative;z-index:2}
+
+section{position:relative;overflow:hidden}
+.hero,.page-hero,.section-pad,.section-pad-sm,.cta-band{overflow:hidden}
+.section-pad{padding:100px 0}
+.section-pad-sm{padding:70px 0}
+.bg-dim{background:var(--chalk-dim)}
+.bg-ink{background:var(--ink);color:var(--chalk)}
+.bg-ink h2,.bg-ink h3,.bg-ink h4{color:var(--chalk)}
+.bg-white{background:var(--white)}
+.section-head{max-width:700px;margin-bottom:54px}
+.section-head h2{font-size:clamp(2.3rem,5vw,3.8rem)}
+.section-head p{color:var(--steel);margin-top:14px}
+.bg-ink .section-head p{color:rgba(243,241,234,.65)}
+.section-head.center{margin-left:auto;margin-right:auto;text-align:center}
+.lane-divider{display:flex;justify-content:center;gap:8px;padding:0;height:28px;align-items:center}
+.lane-divider i{display:block;width:46px;height:8px;background:var(--clay);transform:skewX(-30deg)}
+.lane-divider i:nth-child(2){background:var(--ink)}
+.lane-divider i:nth-child(3){background:var(--volt-dark)}
+
+/* ---------- Ticker ---------- */
+.ticker{background:var(--clay);padding:16px 0;overflow:hidden;transform:rotate(-1.2deg);margin:-20px -20px 0;position:relative;z-index:3;max-width:100vw}
+.ticker-track{display:flex;gap:40px;white-space:nowrap;width:max-content}
+.ticker-track span{font-family:var(--font-display);font-style:italic;font-weight:800;text-transform:uppercase;font-size:1.7rem;color:var(--white);display:flex;align-items:center;gap:40px}
+.ticker-track span::after{content:"";width:14px;height:14px;background:var(--volt);transform:skewX(-30deg)}
+.ticker.ticker-ltr{background:var(--ink);transform:rotate(1.2deg);margin:0 -20px;max-width:100vw}
+.ticker.ticker-ltr .ticker-track span{color:var(--volt)}
+.ticker.ticker-ltr .ticker-track span::after{background:var(--clay)}
+
+/* ---------- Motion marquee: auto-scrolling image strips ---------- */
+.marquee{position:relative;overflow:hidden;padding:4px 0;width:100%;max-width:100%;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.marquee-track{display:flex;width:max-content;will-change:transform}
+.marquee .m-item{flex:0 0 auto;width:clamp(220px,26vw,330px);aspect-ratio:4/3;margin-right:16px;overflow:hidden;position:relative;background:var(--ink-3);clip-path:polygon(7% 0,100% 0,93% 100%,0 100%)}
+.marquee .m-item img{width:100%;height:100%;object-fit:cover;filter:grayscale(.35);transition:transform .7s var(--ease-out),filter .4s}
+.marquee .m-item:hover img{transform:scale(1.08);filter:grayscale(0)}
+.marquee .m-item .m-tag{position:absolute;left:14px;bottom:12px;font-family:var(--font-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--chalk);background:rgba(13,14,17,.72);padding:5px 10px}
+.marquee .m-item .m-no{position:absolute;top:10px;right:14px;font-family:var(--font-display);font-style:italic;font-weight:800;font-size:2.4rem;line-height:1;color:transparent;-webkit-text-stroke:1.4px rgba(243,241,234,.6)}
+.marquee-ltr .marquee-track{animation:marquee-ltr 40s linear infinite}
+.marquee-rtl .marquee-track{animation:marquee-rtl 48s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+@keyframes marquee-ltr{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@keyframes marquee-rtl{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:767px){.marquee .m-item{width:220px}}
+
+/* ---------- Facilities ---------- */
+.facility-card{position:relative;overflow:hidden;background:var(--ink);color:var(--chalk);min-height:300px;height:100%;display:flex;flex-direction:column;justify-content:flex-end;clip-path:polygon(0 0,100% 0,100% 92%,92% 100%,0 100%)}
+.facility-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55;transition:transform .8s var(--ease-out),opacity .4s}
+.facility-card:hover img{transform:scale(1.07);opacity:.38}
+.facility-card .f-body{position:relative;padding:26px;background:linear-gradient(0deg,rgba(13,14,17,.94),transparent 92%)}
+.facility-card .f-ico{width:46px;height:46px;background:var(--volt);display:flex;align-items:center;justify-content:center;margin-bottom:14px;clip-path:polygon(15% 0,100% 0,85% 100%,0 100%)}
+.facility-card .f-ico svg{width:22px;height:22px;stroke:var(--ink)}
+.facility-card h3{color:var(--chalk);font-size:1.8rem;margin-bottom:6px}
+.facility-card p{color:rgba(243,241,234,.78);font-size:.9rem;margin:0}
+
+/* ---------- Program cards ---------- */
+.program-card{position:relative;overflow:hidden;aspect-ratio:3/4;background:var(--ink);color:var(--chalk);display:block;height:100%}
+.program-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease-out),opacity .4s;opacity:.75}
+.program-card:hover img{transform:scale(1.08);opacity:.55}
+.program-card .p-body{position:absolute;inset:auto 0 0 0;padding:26px;background:linear-gradient(0deg,rgba(13,14,17,.95),transparent)}
+.program-card .p-age{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;color:var(--volt);text-transform:uppercase}
+.program-card h3{color:var(--chalk);font-size:2.1rem;margin:6px 0 8px}
+.program-card p{font-size:.9rem;color:rgba(243,241,234,.72);margin:0;max-height:0;overflow:hidden;opacity:0;transition:max-height .5s var(--ease-out),opacity .4s}
+.program-card:hover p{max-height:90px;opacity:1}
+.program-card .p-no{position:absolute;top:16px;right:20px;font-family:var(--font-display);font-style:italic;font-weight:800;font-size:3.4rem;color:transparent;-webkit-text-stroke:1.5px rgba(243,241,234,.55)}
+
+/* ---------- Steps ---------- */
+.step-card{padding:34px 28px;background:var(--white);border:1px solid var(--line);height:100%;position:relative;overflow:hidden}
+.step-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--clay);transform:scaleY(0);transform-origin:top;transition:transform .5s var(--ease-out)}
+.step-card:hover::before{transform:scaleY(1)}
+.step-num{font-family:var(--font-display);font-style:italic;font-weight:800;font-size:4rem;line-height:1;color:transparent;-webkit-text-stroke:1.5px var(--clay);margin-bottom:12px}
+.step-card h3{font-size:1.7rem;margin-bottom:10px}
+.step-card p{color:var(--steel);font-size:.95rem;margin:0}
+
+/* ---------- Feature cards ---------- */
+.feature-card{padding:32px 28px;background:var(--white);border:1px solid var(--line);height:100%;transition:transform .4s var(--ease-out),border-color .3s,box-shadow .4s}
+.feature-card:hover{transform:translateY(-6px);border-color:var(--clay);box-shadow:0 30px 50px -30px rgba(13,14,17,.3)}
+.feature-icon{width:54px;height:54px;background:var(--ink);display:flex;align-items:center;justify-content:center;margin-bottom:20px;clip-path:polygon(15% 0,100% 0,85% 100%,0 100%)}
+.feature-icon svg{width:24px;height:24px;stroke:var(--volt)}
+.feature-card h3{font-size:1.6rem;margin-bottom:10px}
+.feature-card p{color:var(--steel);font-size:.95rem;margin:0}
+
+/* ---------- Coach ---------- */
+.coach-card .c-photo{aspect-ratio:4/5;overflow:hidden;background:var(--ink-3);clip-path:polygon(0 0,100% 0,100% 90%,88% 100%,0 100%);margin-bottom:16px}
+.coach-card .c-photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(.85);transition:filter .5s,transform .7s var(--ease-out)}
+.coach-card:hover .c-photo img{filter:grayscale(0);transform:scale(1.05)}
+.coach-card h4{font-size:1.6rem;margin-bottom:2px}
+.coach-card span{font-family:var(--font-mono);font-size:.74rem;color:var(--clay);text-transform:uppercase;letter-spacing:.06em}
+
+/* ---------- Split / checklist ---------- */
+.check-list{list-style:none;padding:0;margin:26px 0 0}
+.check-list li{display:flex;gap:12px;margin-bottom:14px;font-weight:500}
+.check-list li::before{content:"";flex-shrink:0;width:20px;height:20px;margin-top:2px;background:var(--clay);clip-path:polygon(0 52%,14% 38%,38% 62%,86% 12%,100% 28%,38% 92%)}
+.split-img{overflow:hidden;clip-path:polygon(0 0,100% 0,100% 100%,10% 100%);aspect-ratio:5/4;background:var(--ink-3)}
+.split-img img{width:100%;height:100%;object-fit:cover}
+
+/* ---------- Gallery ---------- */
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:210px;gap:14px}
+.gallery .g{overflow:hidden;position:relative;background:var(--ink-3)}
+.gallery .g img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease-out)}
+.gallery .g:hover img{transform:scale(1.1)}
+.gallery .g.wide{grid-column:span 2}
+.gallery .g.tall{grid-row:span 2}
+@media(max-width:767px){.gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px}}
+
+/* ---------- Counters ---------- */
+.counter-band{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.counter-item{padding:26px 10px;text-align:center;border-left:1px solid var(--line-dark)}
+.counter-item:first-child{border-left:none}
+.counter-item b{font-family:var(--font-display);font-style:italic;font-weight:800;font-size:clamp(3.5rem,9vw,8rem);line-height:1;color:var(--volt);display:block}
+.counter-item span{font-family:var(--font-mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(243,241,234,.55)}
+@media(max-width:767px){.counter-band{grid-template-columns:repeat(2,1fr)}.counter-item{border-left:none;border-top:1px solid var(--line-dark)}}
+
+/* ---------- Testimonials ---------- */
+.testi-card{background:var(--white);padding:34px;border:1px solid var(--line);height:100%;border-top:5px solid var(--clay)}
+.testi-card p.quote{font-size:1.1rem;line-height:1.6;margin-bottom:24px;font-weight:500}
+.testi-person{display:flex;align-items:center;gap:14px}
+.testi-person img{width:48px;height:48px;border-radius:50%;object-fit:cover;background:var(--ink-3)}
+.testi-person strong{display:block;font-size:.95rem}
+.testi-person span{font-size:.8rem;color:var(--steel)}
+
+/* ---------- Blog ---------- */
+.blog-card{background:var(--white);border:1px solid var(--line);height:100%;overflow:hidden;transition:transform .4s var(--ease-out)}
+.blog-card:hover{transform:translateY(-6px)}
+.blog-media{aspect-ratio:16/10;overflow:hidden;background:var(--ink-3)}
+.blog-media img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease-out)}
+.blog-card:hover .blog-media img{transform:scale(1.07)}
+.blog-body{padding:24px}
+.blog-meta{display:flex;gap:14px;font-family:var(--font-mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--clay);margin-bottom:10px}
+.blog-body h3{font-size:1.5rem;margin-bottom:10px}
+.blog-body p{color:var(--steel);font-size:.92rem;margin-bottom:14px}
+.blog-readmore{font-family:var(--font-display);font-weight:800;font-style:italic;text-transform:uppercase;letter-spacing:.05em;display:inline-flex;gap:6px;align-items:center}
+.blog-readmore svg{width:15px;height:15px;transition:transform .25s var(--ease-out)}
+.blog-card:hover .blog-readmore svg{transform:translateX(5px)}
+.blog-filter{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
+.blog-filter button{font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:1rem;padding:8px 20px;border:2px solid var(--ink);background:transparent;cursor:pointer;transition:.25s}
+.blog-filter button.active,.blog-filter button:hover{background:var(--ink);color:var(--volt)}
+
+/* ---------- Timeline ---------- */
+.timeline{position:relative;padding-left:40px}
+.timeline::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.timeline-item{position:relative;padding-bottom:44px}
+.timeline-item:last-child{padding-bottom:0}
+.timeline-item::before{content:"";position:absolute;left:-40px;top:5px;width:16px;height:16px;background:var(--clay);transform:skewX(-20deg)}
+.timeline-item .yr{font-family:var(--font-display);font-style:italic;font-weight:800;font-size:1.6rem;color:var(--clay);display:block;line-height:1}
+.timeline-item h4{font-size:1.5rem;margin:6px 0}
+.timeline-item p{color:var(--steel);margin:0;max-width:540px}
+
+/* ---------- Plans ---------- */
+.plan-card{background:var(--white);border:1px solid var(--line);padding:38px 30px;height:100%;position:relative;transition:transform .4s var(--ease-out)}
+.plan-card:hover{transform:translateY(-6px)}
+.plan-card.is-popular{background:var(--ink);color:var(--chalk);border-color:var(--ink)}
+.plan-card.is-popular h3,.plan-card.is-popular .plan-price{color:var(--chalk)}
+.plan-badge{position:absolute;top:-14px;left:30px;background:var(--volt);color:var(--ink);font-family:var(--font-mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;padding:6px 14px}
+.plan-card h3{font-size:2rem}
+.plan-age{font-family:var(--font-mono);font-size:.74rem;color:var(--clay);text-transform:uppercase;margin-bottom:12px;display:block}
+.plan-price{font-family:var(--font-display);font-style:italic;font-weight:800;font-size:3.6rem;line-height:1;margin:14px 0 4px}
+.plan-price small{font-family:var(--font-body);font-style:normal;font-weight:500;font-size:.9rem;color:var(--steel)}
+.plan-list{list-style:none;padding:0;margin:20px 0 28px}
+.plan-list li{display:flex;gap:10px;margin-bottom:11px;font-size:.93rem}
+.plan-list li::before{content:"";flex-shrink:0;width:16px;height:16px;margin-top:3px;background:var(--clay);clip-path:polygon(0 52%,14% 38%,38% 62%,86% 12%,100% 28%,38% 92%)}
+.plan-card.is-popular .plan-list li::before{background:var(--volt)}
+
+/* ---------- CTA ---------- */
+.cta-band{background:var(--clay);padding:64px 56px;color:var(--white);position:relative;overflow:hidden;clip-path:polygon(0 0,100% 0,97% 100%,0 100%)}
+.cta-band h2{color:var(--white);font-size:clamp(2.4rem,5vw,4rem);max-width:640px}
+.cta-band p{color:rgba(255,255,255,.85);margin:14px 0 28px;max-width:480px}
+.cta-band .lane-bg{opacity:.7}
+
+/* ---------- Forms ---------- */
+.form-card{background:var(--white);padding:42px;border:1px solid var(--line);border-top:6px solid var(--clay)}
+.form-label{font-family:var(--font-mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;display:block;color:var(--ink)}
+.form-control,.form-select{background:var(--chalk-dim);border:2px solid transparent;border-radius:0;padding:13px 16px;font-size:.98rem;width:100%;color:var(--ink);transition:border-color .25s,background .25s}
+.form-control:focus,.form-select:focus{background:var(--white);border-color:var(--clay);outline:none;box-shadow:none}
+textarea.form-control{min-height:130px;resize:vertical}
+.form-check-input{width:18px;height:18px;margin-top:2px}
+.input-wrap{margin-bottom:20px}
+.accordion-item{border:1px solid var(--line)!important;border-radius:0!important;margin-bottom:12px;overflow:hidden}
+.accordion-button{font-family:var(--font-display);font-weight:700;font-style:italic;text-transform:uppercase;font-size:1.25rem;letter-spacing:.02em}
+.accordion-button:not(.collapsed){background:var(--ink);color:var(--volt)}
+.accordion-button:focus{box-shadow:none}
+
+/* ---------- Auth ---------- */
+.auth-wrap{min-height:100vh;display:flex}
+.auth-visual{flex:1.1;position:relative;background:var(--ink);overflow:hidden;display:none}
+.auth-visual img{width:100%;height:100%;object-fit:cover;opacity:.5}
+.auth-overlay{position:absolute;inset:0;padding:60px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(0deg,rgba(13,14,17,.95),rgba(13,14,17,.1))}
+.auth-overlay blockquote{font-family:var(--font-display);font-style:italic;font-weight:800;text-transform:uppercase;font-size:2.4rem;line-height:1.05;color:var(--chalk);max-width:480px}
+.auth-overlay cite{font-style:normal;font-family:var(--font-mono);font-size:.78rem;color:var(--volt);display:block;margin-top:16px}
+.auth-form-side{flex:1;display:flex;align-items:center;justify-content:center;padding:50px 24px}
+.auth-form-side .inner{width:100%;max-width:430px}
+.auth-form-side .brand span.name{color:var(--ink)}
+.role-toggle{display:flex;gap:8px;margin-bottom:24px}
+.role-toggle button{flex:1;padding:12px;border:2px solid var(--ink);background:transparent;font-family:var(--font-display);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:1rem;cursor:pointer;transition:.25s}
+.role-toggle button.active{background:var(--ink);color:var(--volt)}
+@media(min-width:992px){.auth-visual{display:block}}
+
+/* ---------- Footer ---------- */
+.site-footer{background:var(--ink);color:rgba(243,241,234,.7);padding:90px 0 28px;position:relative}
+.site-footer h5{font-family:var(--font-mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--volt);margin-bottom:20px}
+.site-footer ul{list-style:none;padding:0;margin:0}
+.site-footer li{margin-bottom:11px}
+.site-footer a{font-size:.95rem;color:rgba(243,241,234,.7);transition:color .2s}
+.site-footer a:hover{color:var(--volt)}
+.footer-bottom{border-top:1px solid var(--line-dark);margin-top:56px;padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:.84rem;color:rgba(243,241,234,.45)}
+.social-row{display:flex;gap:10px}
+.social-row a{width:40px;height:40px;border:1px solid var(--line-dark);display:flex;align-items:center;justify-content:center;transition:.25s}
+.social-row a:hover{border-color:var(--volt);background:rgba(212,255,63,.08)}
+.newsletter-form{display:flex;gap:8px}
+.newsletter-form input{flex:1;background:rgba(243,241,234,.06);border:1px solid var(--line-dark);padding:10px 16px;color:var(--chalk);font-size:.9rem}
+.newsletter-form input::placeholder{color:rgba(243,241,234,.4)}
+.newsletter-form input:focus{outline:none;border-color:var(--volt)}
+.scroll-top{position:fixed;right:24px;bottom:24px;width:48px;height:48px;background:var(--volt);color:var(--ink);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:500;border:none;cursor:pointer;clip-path:polygon(15% 0,100% 0,85% 100%,0 100%)}
+.scroll-top.is-visible{opacity:1;pointer-events:auto}
+.scroll-top:hover{transform:translateY(-4px)}
+
+@media(max-width:767px){
+  .ticker, .ticker.ticker-ltr{margin:0!important;transform:none!important;width:100%!important;max-width:100%!important}
+  .hero{padding:130px 0 90px;text-align:center}
+  .hero h1{font-size:clamp(2.4rem,7.5vw,3.6rem);word-break:normal;overflow-wrap:break-word}
+  .hero-actions,.hero-stats{justify-content:center}
+  .hero-float.f1{left:8px}
+  .hero-float.f2{display:none}
+  .cta-band{padding:44px 24px;text-align:center}
+  .form-card{padding:26px}
+}
+
+</style></head><body><div id="preloader"><div class="lanes"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="count">3</div><span class="load-label">Stackly Academy — On your marks</span></div>
+<nav class="site-nav"><div class="container-xl nav-inner">
+  <a href="index.html" class="brand"><img class="brand-logo" src="logo_green.webp" alt="Stackly"></a>
+  <ul class="nav-links"><li><a href="index.html" class=active>Home</a></li><li><a href="about.html">About</a></li><li><a href="features.html">Features</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul>
+  <div class="nav-actions">
+    <a href="login.html" class="btn btn-ghost btn-sm">Log in</a>
+    <a href="register.html" class="btn btn-volt btn-sm btn-magnetic">Join the academy</a>
+  </div>
+  <button class="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
+</div></nav>
+<div class="mobile-panel"><ul><li><a class="link" href="index.html">Home</a></li><li><a class="link" href="about.html">About</a></li><li><a class="link" href="features.html">Features</a></li><li><a class="link" href="blog.html">Blog</a></li><li><a class="link" href="contact.html">Contact</a></li></ul>
+  <div class="mp-actions"><a href="login.html" class="btn btn-ghost">Log in</a><a href="register.html" class="btn btn-volt">Register</a></div>
+</div><header class="hero">
+  <div class="lane-bg"></div>
+  <div class="container-xl">
+    <div class="row align-items-center gy-5">
+      <div class="col-lg-7">
+        <div class="eyebrow">Multi-sport academy · Ages 6–19</div>
+        <h1>Train like <span class="outline">it counts.</span> <span class="clay">Win</span> like you earned it.</h1>
+        <p class="lead">Six sports, certified coaches and a performance-tracked pathway that takes young athletes from their first session to their first podium.</p>
+        <div class="hero-actions">
+          <a href="404.html?from=index.html" class="btn btn-volt btn-magnetic">Book a free trial</a>
+          <a href="404.html?from=index.html" class="btn btn-ghost btn-magnetic">Explore programs</a>
+        </div>
+        <div class="hero-stats">
+          <div><b><span data-counter="1800">0</span>+</b><span>ACTIVE ATHLETES</span></div>
+          <div><b><span data-counter="42">0</span></b><span>CERTIFIED COACHES</span></div>
+          <div><b><span data-counter="260">0</span></b><span>PODIUMS / YEAR</span></div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="hero-photo-wrap">
+          <div class="hero-photo"><img src="images/photo_1461896836934-ffe607_04.webp" alt="Sprinter exploding off the blocks on a running track" loading="eager"></div>
+          <div class="hero-float f1"><div><strong>Next session</strong><span>Sprint lab · 6:30 AM · Track A</span></div></div>
+          <div class="hero-float f2"><div><strong>+14% speed</strong><span>avg. gain in 12 weeks</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="ticker"><div class="ticker-track">
+  <span>Football</span><span>Basketball</span><span>Swimming</span><span>Athletics</span><span>Tennis</span><span>Gymnastics</span>
+</div></div>
+
+<!-- Programs -->
+<section class="section-pad">
+  <div class="container-xl">
+    <div class="row align-items-end">
+      <div class="col-lg-7"><div class="section-head">
+        <div class="eyebrow">Programs</div><h2>Pick your sport. Own your lane.</h2>
+        <p>Every program runs on the same method: assess, train, compete, level up — with coaches who specialise in one sport only.</p></div></div>
+      <div class="col-lg-5 text-lg-end mb-5"><a href="404.html?from=index.html" class="btn btn-dark btn-magnetic">All programs &amp; plans</a></div>
+    </div>
+    <div class="row g-3 reveal-stagger">
+      <div class="col-6 col-lg-4"><a href="404.html?from=index.html" class="program-card" data-tilt><img src="images/photo_1574629810360-7efbbe_57.webp" alt="Youth football players during a training match" loading="lazy"><span class="p-no">01</span><div class="p-body"><span class="p-age">Ages 6–19</span><h3>Football</h3><p>Position-specific coaching, small-sided games and weekend league fixtures.</p></div></a></div>
+      <div class="col-6 col-lg-4"><a href="404.html?from=index.html" class="program-card" data-tilt><img src="images/photo_1546519638-68e109498_42.webp" alt="Basketball player going up for a layup" loading="lazy"><span class="p-no">02</span><div class="p-body"><span class="p-age">Ages 8–19</span><h3>Basketball</h3><p>Ball-handling labs, shooting mechanics and five-on-five tactical play.</p></div></a></div>
+      <div class="col-6 col-lg-4"><a href="404.html?from=index.html" class="program-card" data-tilt><img src="images/photo_1530549387789-4c1017_33.webp" alt="Swimmer mid-stroke in a competition pool" loading="lazy"><span class="p-no">03</span><div class="p-body"><span class="p-age">Ages 6–19</span><h3>Swimming</h3><p>Stroke technique, endurance sets and timed meets in a 50m pool.</p></div></a></div>
+      <div class="col-6 col-lg-4"><a href="404.html?from=index.html" class="program-card" data-tilt><img src="images/photo_1552674605-db6ffd4fa_49.webp" alt="Athletes warming up on a track" loading="lazy"><span class="p-no">04</span><div class="p-body"><span class="p-age">Ages 8–19</span><h3>Athletics</h3><p>Sprints, middle distance, jumps and throws with video gait analysis.</p></div></a></div>
+      <div class="col-6 col-lg-4"><a href="404.html?from=index.html" class="program-card" data-tilt><img src="images/photo_1622279457486-62dcc4_69.webp" alt="Tennis player serving on a hard court" loading="lazy"><span class="p-no">05</span><div class="p-body"><span class="p-age">Ages 6–19</span><h3>Tennis</h3><p>Serve and footwork clinics, ladder matches and regional tournament prep.</p></div></a></div>
+      <div class="col-6 col-lg-4"><a href="404.html?from=index.html" class="program-card" data-tilt><img src="images/photo_1517836357463-d25dfe_21.webp" alt="Gymnast training strength and balance" loading="lazy"><span class="p-no">06</span><div class="p-body"><span class="p-age">Ages 5–16</span><h3>Gymnastics</h3><p>Strength, flexibility and apparatus skills in a safe, spotted environment.</p></div></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- Motion gallery: left-to-right moving contents -->
+<section class="section-pad bg-dim overflow-hidden">
+  <div class="container-xl" style="position:relative">
+    <div class="section-head center" style="margin-bottom:46px">
+      <div class="eyebrow">Inside the academy</div>
+      <h2>A day, start to finish</h2>
+      <p>From 6:30 AM sprint labs to floodlit fixtures — this is what a week looks like across all eighteen of our venues.</p>
+    </div>
+  </div>
+  <!-- Top rail drifts left ➜ right -->
+  <div class="marquee marquee-ltr">
+    <div class="marquee-track">
+      <div class="m-item"><img src="images/photo_1461897104016-0b3b00_05.webp" alt="Sprinters training on the track" loading="lazy"><span class="m-no">01</span><span class="m-tag">Sprint lab · 6:30 AM</span></div>
+      <div class="m-item"><img src="images/photo_1534438327276-14e530_36.webp" alt="Strength and conditioning session" loading="lazy"><span class="m-no">02</span><span class="m-tag">Strength suite</span></div>
+      <div class="m-item"><img src="images/photo_1547347298-4074fc308_43.webp" alt="Football training on the pitch" loading="lazy"><span class="m-no">03</span><span class="m-tag">Pitch 2 · Football</span></div>
+      <div class="m-item"><img src="images/photo_1600965962361-9035db_68.webp" alt="Swimmer training in a lane" loading="lazy"><span class="m-no">04</span><span class="m-tag">Swim lane · 50m</span></div>
+      <div class="m-item"><img src="images/photo_1519861531473-920026_26.webp" alt="Basketball drill on court A" loading="lazy"><span class="m-no">05</span><span class="m-tag">Court A · Basketball</span></div>
+      <div class="m-item"><img src="images/photo_1518611012118-696072_24.webp" alt="Athlete conditioning in the gym" loading="lazy"><span class="m-no">06</span><span class="m-tag">Performance gym</span></div>
+      <div class="m-item"><img src="images/photo_1554068865-24cecd4e3_50.webp" alt="Tennis player on a hard court" loading="lazy"><span class="m-no">07</span><span class="m-tag">Courts 1–6 · Tennis</span></div>
+      <div class="m-item"><img src="images/photo_1544367567-0f2fcb009_41.webp" alt="Recovery and mobility session" loading="lazy"><span class="m-no">08</span><span class="m-tag">Recovery studio</span></div>
+    </div>
+  </div>
+  <!-- Bottom rail drifts right ➜ left -->
+  <div class="marquee marquee-rtl" style="margin-top:16px">
+    <div class="marquee-track">
+      <div class="m-item"><img src="images/photo_1551958219-acbc608c6_46.webp" alt="Floodlit evening fixture" loading="lazy"><span class="m-tag">Friday night lights</span></div>
+      <div class="m-item"><img src="images/photo_1552674605-db6ffd4fa_49.webp" alt="Relay squad warming up" loading="lazy"><span class="m-tag">Relay squad</span></div>
+      <div class="m-item"><img src="images/photo_1517649763962-0c6230_19.webp" alt="Coach briefing the team" loading="lazy"><span class="m-tag">Pre-match talk</span></div>
+      <div class="m-item"><img src="images/photo_1530549387789-4c1017_33.webp" alt="Competitive swimming meet" loading="lazy"><span class="m-tag">Timed meet</span></div>
+      <div class="m-item"><img src="images/photo_1594882645126-140209_66.webp" alt="Dynamic warm-up routine" loading="lazy"><span class="m-tag">Dynamic warm-up</span></div>
+      <div class="m-item"><img src="images/photo_1526506118085-60ce87_30.webp" alt="Runners on the track" loading="lazy"><span class="m-tag">Interval sets</span></div>
+      <div class="m-item"><img src="images/photo_1571019613454-1cb2f9_53.webp" alt="Structured training block" loading="lazy"><span class="m-tag">S&C block 03</span></div>
+      <div class="m-item"><img src="images/photo_1431324155629-1a6deb_01.webp" alt="Indoor court skills work" loading="lazy"><span class="m-tag">Skills academy</span></div>
+    </div>
+  </div>
+  <div class="container-xl text-center" style="position:relative;margin-top:46px">
+    <a href="404.html?from=index.html" class="btn btn-volt btn-magnetic">See every venue &amp; timetable</a>
+  </div>
+</section>
+
+<!-- Pathway -->
+<section class="section-pad bg-ink on-dark">
+  <div class="lane-bg" style="opacity:.6"></div>
+  <div class="container-xl" style="position:relative">
+    <div class="section-head center"><div class="eyebrow">The pathway</div><h2>Four stages from first session to podium</h2></div>
+    <div class="row g-3 reveal-stagger">
+      <div class="col-md-6 col-lg-3"><div class="step-card" style="background:var(--ink-2);border-color:var(--line-dark)"><div class="step-num">01</div><h3 style="color:var(--chalk)">Assess</h3><p>Baseline speed, strength and skill testing sets your personal training plan.</p></div></div>
+      <div class="col-md-6 col-lg-3"><div class="step-card" style="background:var(--ink-2);border-color:var(--line-dark)"><div class="step-num">02</div><h3 style="color:var(--chalk)">Train</h3><p>Three to five coached sessions a week, each logged to your athlete dashboard.</p></div></div>
+      <div class="col-md-6 col-lg-3"><div class="step-card" style="background:var(--ink-2);border-color:var(--line-dark)"><div class="step-num">03</div><h3 style="color:var(--chalk)">Compete</h3><p>Weekend fixtures and quarterly meets turn practice into pressure-tested skill.</p></div></div>
+      <div class="col-md-6 col-lg-3"><div class="step-card" style="background:var(--ink-2);border-color:var(--line-dark)"><div class="step-num">04</div><h3 style="color:var(--chalk)">Level up</h3><p>Top performers earn elite-squad places, scouting showcases and scholarships.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Achievements strip: moves left ➜ right -->
+<div class="ticker ticker-ltr"><div class="ticker-track">
+  <span>260 Podiums a year</span><span>42 Certified coaches</span><span>18 Training venues</span><span>1 coach : 10 athletes</span><span>96% Parent satisfaction</span><span>Safe-sport accredited</span>
+</div></div>
+
+<!-- Why -->
+<section class="section-pad">
+  <div class="container-xl">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-6 reveal-left"><div class="split-img"><img src="images/photo_1517649763962-0c6230_20.webp" alt="Coach briefing a youth team on the field" loading="lazy"></div></div>
+      <div class="col-lg-6">
+        <div class="eyebrow">Why Stackly</div>
+        <h2 style="font-size:clamp(2.3rem,5vw,3.8rem)">Coaching that measures what matters</h2>
+        <p style="color:var(--steel);margin-top:14px">Every athlete gets a data-backed plan, a named coach and a parent-facing dashboard — so progress is visible, not guessed.</p>
+        <ul class="check-list">
+          <li>Maximum 1 coach to 10 athletes in every session</li>
+          <li>Sports-science lab with GPS and heart-rate tracking</li>
+          <li>Nutrition and recovery guidance built into each plan</li>
+          <li>Safe-sport accredited coaches, background-checked annually</li>
+        </ul>
+        <a href="404.html?from=index.html" class="btn btn-clay btn-magnetic" style="margin-top:26px">Our story</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sports science -->
+<section class="section-pad">
+  <div class="container-xl">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-6 order-lg-2 reveal-up"><div class="split-img" style="clip-path:polygon(0 0,100% 0,90% 100%,0 100%)"><img src="images/photo_1517838277536-f5f99b_22.webp" alt="Athlete monitored in the sports-science lab" loading="lazy"></div></div>
+      <div class="col-lg-6 order-lg-1">
+        <div class="eyebrow">Sports science</div>
+        <h2 style="font-size:clamp(2.3rem,5vw,3.8rem)">The numbers behind every improvement</h2>
+        <p style="color:var(--steel);margin-top:14px">GPS vests, force plates and video gait analysis turn every session into feedback. Athletes see exactly what changed and why — and so do parents.</p>
+        <ul class="check-list">
+          <li>Live GPS load and sprint-distance tracking</li>
+          <li>Force-plate jump and asymmetry screening</li>
+          <li>Frame-by-frame technique review</li>
+          <li>Individual recovery and sleep guidance</li>
+        </ul>
+        <a href="404.html?from=index.html" class="btn btn-clay btn-magnetic" style="margin-top:26px">Open the athlete dashboard</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Nutrition & recovery -->
+<section class="section-pad bg-ink on-dark">
+  <div class="lane-bg" style="opacity:.5"></div>
+  <div class="container-xl" style="position:relative"><div class="row g-5 align-items-center">
+    <div class="col-lg-6 reveal-left"><div class="split-img" style="clip-path:polygon(0 0,100% 0,90% 100%,0 100%)"><img src="images/photo_1512621776951-a57141_18.webp" alt="Athlete nutrition and recovery" loading="lazy"></div></div>
+    <div class="col-lg-6 reveal-up">
+      <div class="eyebrow">Nutrition &amp; recovery</div>
+      <h2 style="font-size:clamp(2.3rem,5vw,3.8rem)">Training is only half the job</h2>
+      <p style="color:rgba(243,241,234,.65);margin-top:14px">What athletes eat and how they rest decides how quickly they improve. Every programme builds recovery into the week, not on top of it.</p>
+      <ul class="check-list">
+        <li>Match-day fuelling plans for every age group</li>
+        <li>Guided cooldown and mobility routines</li>
+        <li>Sleep and wellbeing check-ins</li>
+        <li>On-site physio and injury screening</li>
+      </ul>
+      <a href="404.html?from=index.html" class="btn btn-volt btn-magnetic" style="margin-top:26px">See the full programme</a>
+    </div>
+  </div></div>
+</section>
+
+<!-- Coaches -->
+<section class="section-pad">
+  <div class="container-xl">
+    <div class="section-head"><div class="eyebrow">Coaching staff</div><h2>Meet the people in your corner</h2></div>
+    <div class="row g-4 reveal-stagger">
+      <div class="col-6 col-md-3"><div class="coach-card"><div class="c-photo"><img src="images/photo_1507003211169-0a1dd7_13.webp" alt="Head football coach" loading="lazy"></div><h4>Rafael Moreno</h4><span>Head of Football</span></div></div>
+      <div class="col-6 col-md-3"><div class="coach-card"><div class="c-photo"><img src="images/photo_1438761681033-6461ff_02.webp" alt="Head athletics coach" loading="lazy"></div><h4>Amara Okafor</h4><span>Head of Athletics</span></div></div>
+      <div class="col-6 col-md-3"><div class="coach-card"><div class="c-photo"><img src="images/photo_1472099645785-5658ab_06.webp" alt="Head basketball coach" loading="lazy"></div><h4>Darius Cole</h4><span>Head of Basketball</span></div></div>
+      <div class="col-6 col-md-3"><div class="coach-card"><div class="c-photo"><img src="images/photo_1573497019940-1c28c8_55.webp" alt="Head swimming coach" loading="lazy"></div><h4>Mei Tanaka</h4><span>Head of Swimming</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section class="section-pad-sm bg-dim">
+  <div class="container-xl">
+    <div class="section-head"><div class="eyebrow">Inside the academy</div><h2>Game day, every day</h2></div>
+    <div class="gallery reveal-stagger">
+      <div class="g wide tall"><img src="images/photo_1551958219-acbc608c6_47.webp" alt="Football match under floodlights" loading="lazy"></div>
+      <div class="g"><img src="images/photo_1579952363873-27f3ba_59.webp" alt="Football on a training pitch" loading="lazy"></div>
+      <div class="g"><img src="images/photo_1571019613454-1cb2f9_52.webp" alt="Strength training session" loading="lazy"></div>
+      <div class="g wide"><img src="images/photo_1526506118085-60ce87_31.webp" alt="Group of runners on a track" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Facilities -->
+<section class="section-pad bg-white">
+  <div class="container-xl">
+    <div class="row align-items-end">
+      <div class="col-lg-7"><div class="section-head">
+        <div class="eyebrow">Venues &amp; facilities</div>
+        <h2>Built for the work, not the photos</h2>
+        <p>Purpose-built training spaces that athletes feel every session — surfaced, floodlit and open from dawn until late.</p>
+      </div></div>
+      <div class="col-lg-5 text-lg-end mb-5"><a href="404.html?from=index.html" class="btn btn-dark btn-magnetic">Book a venue tour</a></div>
+    </div>
+    <div class="row g-3 reveal-stagger">
+      <div class="col-md-6 col-lg-3"><div class="facility-card"><img src="images/photo_1571902943202-507ec2_54.webp" alt="Indoor performance centre" loading="lazy"><div class="f-body"><div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M3 9l9-6 9 6v10a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 21V12h6v9"/></svg></div><h3>Indoor centre</h3><p>Two full-size halls, sprung floors and climate control for year-round training.</p></div></div></div>
+      <div class="col-md-6 col-lg-3"><div class="facility-card"><img src="images/photo_1552674605-db6ffd4fa_49.webp" alt="Eight-lane running track" loading="lazy"><div class="f-body"><div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div><h3>8-lane track</h3><p>A floodlit 400m mondo track with full jumps and throws provision.</p></div></div></div>
+      <div class="col-md-6 col-lg-3"><div class="facility-card"><img src="images/photo_1530549387789-4c1017_33.webp" alt="50m competition swimming pool" loading="lazy"><div class="f-body"><div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M2 16c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2"/><path d="M6 10V5M12 10V5M18 10V5"/></svg></div><h3>50m pool</h3><p>Competition-ready water with electronic timing and anti-wave lanes.</p></div></div></div>
+      <div class="col-md-6 col-lg-3"><div class="facility-card"><img src="images/photo_1581009146145-b5ef05_61.webp" alt="Strength and conditioning lab" loading="lazy"><div class="f-body"><div class="f-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 6v12M18 6v12M4 9h4M16 9h4M4 15h4M16 15h4M8 12h8"/></svg></div><h3>S&amp;C lab</h3><p>Force plates, GPS units and video analysis for every monitored block.</p></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Membership plans -->
+<section class="section-pad bg-dim">
+  <div class="container-xl">
+    <div class="section-head center"><div class="eyebrow">Membership</div><h2>Simple plans, serious training</h2><p>No joining fee, cancel any time, and every plan starts with a free trial week.</p></div>
+    <div class="row g-4 reveal-stagger">
+      <div class="col-md-4"><div class="plan-card">
+        <h3>Foundation</h3><span class="plan-age">Ages 6–12 · 2 sessions / week</span>
+        <div class="plan-price">$89<small>/month</small></div>
+        <ul class="plan-list"><li>Two coached sessions weekly</li><li>Term progress report</li><li>Training kit included</li><li>Parent dashboard access</li></ul>
+        <a href="404.html?from=index.html" class="btn btn-dark btn-block">Get started</a>
+      </div></div>
+      <div class="col-md-4"><div class="plan-card is-popular">
+        <span class="plan-badge">Most popular</span>
+        <h3>Development</h3><span class="plan-age">Ages 8–16 · 4 sessions / week</span>
+        <div class="plan-price">$149<small>/month</small></div>
+        <ul class="plan-list"><li>Four coached sessions weekly</li><li>Sports-science testing each term</li><li>Weekend league fixtures</li><li>Nutrition &amp; recovery plan</li></ul>
+        <a href="404.html?from=index.html" class="btn btn-volt btn-block">Get started</a>
+      </div></div>
+      <div class="col-md-4"><div class="plan-card">
+        <h3>Elite</h3><span class="plan-age">Ages 12–19 · 6 sessions / week</span>
+        <div class="plan-price">$229<small>/month</small></div>
+        <ul class="plan-list"><li>Six sessions + individual coaching</li><li>Monthly GPS &amp; force-plate review</li><li>Scouting showcase entries</li><li>Physio and recovery-suite access</li></ul>
+        <a href="404.html?from=index.html" class="btn btn-dark btn-block">Get started</a>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Success stories -->
+<section class="section-pad bg-ink on-dark">
+  <div class="lane-bg" style="opacity:.5"></div>
+  <div class="container-xl" style="position:relative">
+    <div class="row align-items-end">
+      <div class="col-lg-8"><div class="section-head">
+        <div class="eyebrow">Success stories</div>
+        <h2>From first session to the next level</h2>
+        <p>Four athletes who started with a free trial — and where the pathway took them.</p>
+      </div></div>
+      <div class="col-lg-4 text-lg-end mb-5"><a href="404.html?from=index.html" class="btn btn-volt btn-magnetic">All stories</a></div>
+    </div>
+    <div class="row g-4 reveal-stagger">
+      <div class="col-6 col-md-3"><div class="coach-card"><div class="c-photo"><img src="images/photo_1594381898411-846e7d_64.webp" alt="Athlete in training" loading="lazy"></div><h4>Leah Ortiz</h4><span>Athletics · U20 national squad</span><p style="color:rgba(243,241,234,.6);font-size:.85rem;margin-top:8px">Cut 1.4s off her 100m across two seasons.</p></div></div>
+      <div class="col-6 col-md-3"><div class="coach-card"><div class="c-photo"><img src="images/photo_1522075469751-3a6694_28.webp" alt="Young football player" loading="lazy"></div><h4>Marcus L.</h4><span>Football · Regional academy</span><p style="color:rgba(243,241,234,.6);font-size:.85rem;margin-top:8px">Signed his first youth contract at 16.</p></div></div>
+      <div class="col-6 col-md-3"><div class="coach-card"><div class="c-photo"><img src="images/photo_1508214751196-bcfd4c_15.webp" alt="Swimmer portrait" loading="lazy"></div><h4>Daniel Cho</h4><span>Swimming · County record holder</span><p style="color:rgba(243,241,234,.6);font-size:.85rem;margin-top:8px">Broke the county 200m IM record in year two.</p></div></div>
+      <div class="col-6 col-md-3"><div class="coach-card"><div class="c-photo"><img src="images/photo_1531123897727-8f129e_34.webp" alt="Basketball player portrait" loading="lazy"></div><h4>Amara K.</h4><span>Basketball · National camp invite</span><p style="color:rgba(243,241,234,.6);font-size:.85rem;margin-top:8px">Earned a national training-camp place.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section-pad">
+  <div class="container-xl">
+    <div class="section-head center"><div class="eyebrow">Locker room talk</div><h2>Athletes and parents on the academy</h2></div>
+    <div class="row g-4 reveal-stagger">
+      <div class="col-md-4"><div class="testi-card"><p class="quote">"My daughter dropped 1.2 seconds off her 100m in one season. The dashboard showed us exactly why."</p><div class="testi-person"><img src="images/photo_1544005313-94ddf0286_39.webp" alt="Parent portrait" loading="lazy"><div><strong>Priya S.</strong><span>Parent · Athletics U14</span></div></div></div></div>
+      <div class="col-md-4"><div class="testi-card"><p class="quote">"Coach Moreno made me a better teammate before he made me a better striker. That's the difference here."</p><div class="testi-person"><img src="images/photo_1633332755192-727a05_70.webp" alt="Athlete portrait" loading="lazy"><div><strong>Marcus L.</strong><span>Athlete · Football U17</span></div></div></div></div>
+      <div class="col-md-4"><div class="testi-card"><p class="quote">"Safe, structured and genuinely demanding. Our son looks forward to every single session."</p><div class="testi-person"><img src="images/photo_1500648767791-00dcc9_09.webp" alt="Parent portrait" loading="lazy"><div><strong>Naomi R.</strong><span>Parent · Swimming U12</span></div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Blog -->
+<section class="section-pad bg-dim">
+  <div class="container-xl">
+    <div class="row align-items-end"><div class="col-lg-7"><div class="section-head"><div class="eyebrow">Journal</div><h2>Training notes &amp; match reports</h2></div></div>
+    <div class="col-lg-5 text-lg-end mb-5"><a href="404.html?from=index.html" class="btn btn-dark btn-magnetic">Read the journal</a></div></div>
+    <div class="row g-4 reveal-stagger">
+      <div class="col-md-4"><div class="blog-card"><div class="blog-media"><img src="images/photo_1594882645126-140209_66.webp" alt="Athlete stretching before training" loading="lazy"></div><div class="blog-body"><div class="blog-meta"><span>Training</span><span>Sep 18</span></div><h3>The 10-minute warm-up that cut our injuries</h3><p>Dynamic prep, explained by our sports-science team.</p><a href="404.html?from=index.html" class="blog-readmore">Read <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></div>
+      <div class="col-md-4"><div class="blog-card"><div class="blog-media"><img src="images/photo_1551958219-acbc608c6_46.webp" alt="Youth football match in progress" loading="lazy"></div><div class="blog-body"><div class="blog-meta"><span>Match day</span><span>Sep 07</span></div><h3>U15s clinch the regional title on penalties</h3><p>A 3–3 thriller and a shoot-out our keeper won't forget.</p><a href="404.html?from=index.html" class="blog-readmore">Read <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></div>
+      <div class="col-md-4"><div class="blog-card"><div class="blog-media"><img src="images/photo_1571019613454-1cb2f9_53.webp" alt="Athlete preparing a healthy meal" loading="lazy"></div><div class="blog-body"><div class="blog-meta"><span>Nutrition</span><span>Aug 26</span></div><h3>What a young athlete should eat on match day</h3><p>Simple fuelling rules for before, during and after.</p><a href="404.html?from=index.html" class="blog-readmore">Read <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad bg-white">
+  <div class="container-xl"><div class="cta-band reveal-up"><div class="lane-bg"></div>
+    <div class="row align-items-center" style="position:relative"><div class="col-lg-8"><h2>Your first session is on us.</h2><p>Try any program for free — no kit, no commitment. Just turn up and train.</p></div>
+    <div class="col-lg-4 text-lg-end"><a href="404.html?from=index.html" class="btn btn-dark btn-magnetic">Book a free trial</a></div></div></div></div>
+</section>
+
+<footer class="site-footer"><div class="container-xl">
+  <div class="row g-5">
+    <div class="col-lg-4">
+      <a href="index.html" class="brand"><img class="brand-logo" src="logo_green.webp" alt="Stackly"></a>
+      <p style="margin-top:18px;max-width:330px;font-size:.95rem">A multi-sport academy building disciplined, confident athletes — from first kick to national squad.</p>
+      <div class="social-row" style="margin-top:22px">
+        <a href="404.html?from=index.html" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F3F1EA" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg></a>
+        <a href="404.html?from=index.html" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F3F1EA" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="3"/><path d="M10 9l5 3-5 3z"/></svg></a>
+        <a href="404.html?from=index.html" aria-label="X"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F3F1EA" stroke-width="2"><path d="M4 4l16 16M20 4 4 20"/></svg></a>
+      </div>
+    </div>
+    <div class="col-lg-2 col-6"><h5>Quick Links</h5><ul>
+      <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="features.html">Features</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="col-lg-2 col-6"><h5>Sports</h5><ul>
+      <li><a href="404.html?from=index.html">Football</a></li><li><a href="404.html?from=index.html">Basketball</a></li><li><a href="404.html?from=index.html">Swimming</a></li><li><a href="404.html?from=index.html">Athletics</a></li><li><a href="404.html?from=index.html">Cricket</a></li></ul></div>
+    <div class="col-lg-4"><h5>Game-day updates</h5><p style="font-size:.95rem">Fixtures, results and training tips — weekly.</p>
+      <form class="newsletter-form" action="404.html?from=index.html" method="get" onsubmit="handleNewsletter(event, this); return false;"><input type="email" placeholder="you@email.com" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[cC][oO][mM]" title="Please enter a valid email address ending with .com" oninput="this.setCustomValidity('')"><button class="btn btn-volt btn-sm" type="submit">Join</button></form></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 Stackly Sports Academy. All rights reserved.</span><span style="display:flex;gap:16px"><a href="404.html?from=index.html">Privacy</a><a href="404.html?from=index.html">Cookie Settings</a></span></div>
+</div></footer>
+<button class="scroll-top" aria-label="Scroll to top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script><script>/* STACKLY SPORTS ACADEMY — main.js */
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+function handleNewsletter(e, form) {
+  if (e) e.preventDefault();
+  const input = form.querySelector('input[type="email"]') || form.querySelector('input');
+  if (!input) return false;
+  const val = input.value.trim();
+  const comRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.com$/i;
+  if (!comRegex.test(val)) {
+    input.setCustomValidity("Please enter a valid email address ending with .com");
+    input.reportValidity();
+    return false;
+  }
+  input.setCustomValidity("");
+  window.location.href = "404.html?from=index.html";
+  return false;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  document.querySelectorAll('.newsletter-form').forEach(form => {
+    const input = form.querySelector('input[type="email"]') || form.querySelector('input');
+    if (input) {
+      input.addEventListener('input', () => input.setCustomValidity(''));
+    }
+    form.addEventListener('submit', (e) => handleNewsletter(e, form));
+  });
+
+  /* ---- Image fallback: if a hotlinked photo fails, show a lane-gradient placeholder ---- */
+  document.querySelectorAll('img').forEach(img => {
+    img.addEventListener('error', () => {
+      img.style.display = 'none';
+      if (img.parentElement) img.parentElement.style.background =
+        'repeating-linear-gradient(105deg,#16181D 0 40px,#20232A 40px 44px)';
+    }, { once: true });
+  });
+
+  /* ---- Preloader: 3-2-1-GO countdown ---- */
+  const pre = document.getElementById('preloader');
+  if (pre) {
+    const lanes = pre.querySelectorAll('.lanes i');
+    const count = pre.querySelector('.count');
+    const tl = gsap.timeline({
+      onComplete() {
+        gsap.to(pre, { yPercent: -100, duration: .35, ease: 'power4.inOut',
+          onComplete() { pre.style.display = 'none'; playHeroIntro(); } });
+      }
+    });
+    tl.from(lanes, { scaleX: 0, duration: .25, stagger: .025, ease: 'power3.out' });
+    ['3', '2', '1', 'GO'].forEach(t => {
+      tl.call(() => count.textContent = t)
+        .fromTo(count, { scale: 1.5, opacity: 0 }, { scale: 1, opacity: 1, duration: .13, ease: 'back.out(2)' })
+        .to(count, { opacity: .15, duration: .04 });
+    });
+  } else { playHeroIntro(); }
+
+
+  /* ---- Nav ---- */
+  const nav = document.querySelector('.site-nav');
+  const onScroll = () => nav && nav.classList.toggle('is-scrolled', scrollY > 40);
+  onScroll(); addEventListener('scroll', onScroll);
+  const burger = document.querySelector('.nav-burger'), panel = document.querySelector('.mobile-panel');
+  if (burger && panel) {
+    burger.addEventListener('click', () => { burger.classList.toggle('is-open'); panel.classList.toggle('is-open'); });
+    panel.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { burger.classList.remove('is-open'); panel.classList.remove('is-open'); }));
+  }
+
+  /* ---- Magnetic buttons ---- */
+  document.querySelectorAll('.btn-magnetic').forEach(b => {
+    b.addEventListener('mousemove', e => {
+      const r = b.getBoundingClientRect();
+      gsap.to(b, { x: (e.clientX - r.left - r.width / 2) * .3, y: (e.clientY - r.top - r.height / 2) * .45, duration: .4, ease: 'power3.out' });
+    });
+    b.addEventListener('mouseleave', () => gsap.to(b, { x: 0, y: 0, duration: .5, ease: 'elastic.out(1,.4)' }));
+  });
+
+  /* ---- Scroll top ---- */
+  const st = document.querySelector('.scroll-top');
+  if (st) {
+    addEventListener('scroll', () => st.classList.toggle('is-visible', scrollY > 600));
+    st.addEventListener('click', () => gsap.to(window, { duration: 1, scrollTo: 0, ease: 'power3.inOut' }));
+  }
+
+  /* ---- Drifting lane stripes ---- */
+  document.querySelectorAll('.lane-bg').forEach(el => {
+    gsap.to(el, { backgroundPosition: '162px 0', duration: 6, ease: 'none', repeat: -1 });
+  });
+
+  /* ---- Reveals ---- */
+  gsap.utils.toArray('.reveal-up').forEach(el => gsap.fromTo(el, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%' } }));
+  gsap.utils.toArray('.reveal-stagger').forEach(g => gsap.fromTo(g.children, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: .8, stagger: .1, ease: 'power3.out', scrollTrigger: { trigger: g, start: 'top 86%' } }));
+  gsap.utils.toArray('.reveal-scale').forEach(el => gsap.fromTo(el, { scale: .92, opacity: 0 }, { scale: 1, opacity: 1, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%' } }));
+  gsap.utils.toArray('.reveal-left').forEach(el => gsap.fromTo(el, { x: -70, opacity: 0 }, { x: 0, opacity: 1, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 86%' } }));
+  gsap.utils.toArray('.section-head').forEach(el => gsap.fromTo(el, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%' } }));
+  gsap.utils.toArray('.lane-divider').forEach(el => gsap.fromTo(el.children, { scaleX: 0 }, { scaleX: 1, duration: .6, stagger: .12, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 95%' } }));
+
+  /* ---- Counters ---- */
+  gsap.utils.toArray('[data-counter]').forEach(el => {
+    const end = parseFloat(el.dataset.counter), dec = el.dataset.counter.includes('.') ? 1 : 0, o = { v: 0 };
+    ScrollTrigger.create({ trigger: el, start: 'top 92%', once: true, onEnter() {
+      gsap.to(o, { v: end, duration: 2, ease: 'power2.out', onUpdate() { el.textContent = o.v.toFixed(dec).replace(/\B(?=(\d{3})+(?!\d))/g, ','); } });
+    } });
+  });
+
+  /* ---- Tilt ---- */
+  document.querySelectorAll('[data-tilt]').forEach(c => {
+    c.addEventListener('mousemove', e => {
+      const r = c.getBoundingClientRect(), px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5;
+      gsap.to(c, { rotateY: px * 8, rotateX: -py * 8, duration: .4, ease: 'power2.out', transformPerspective: 900 });
+    });
+    c.addEventListener('mouseleave', () => gsap.to(c, { rotateX: 0, rotateY: 0, duration: .6, ease: 'power3.out' }));
+  });
+
+  /* ---- Ticker (rtl default, ltr when .ticker-ltr) ---- */
+  document.querySelectorAll('.ticker-track').forEach(t => {
+    t.innerHTML += t.innerHTML;
+    const ltr = t.closest('.ticker') && t.closest('.ticker').classList.contains('ticker-ltr');
+    const dist = () => t.scrollWidth / 2;
+    gsap.fromTo(t, { x: ltr ? () => -dist() : 0 }, { x: ltr ? 0 : () => -dist(), duration: 28, ease: 'none', repeat: -1 });
+  });
+
+  /* ---- Motion marquees: duplicate content for a seamless CSS loop ---- */
+  document.querySelectorAll('.marquee-track').forEach(t => { t.innerHTML += t.innerHTML; });
+
+  /* ---- Blog filter ---- */
+  const fb = document.querySelectorAll('.blog-filter button'), cards = document.querySelectorAll('[data-category]');
+  fb.forEach(btn => btn.addEventListener('click', () => {
+    fb.forEach(b => b.classList.remove('active')); btn.classList.add('active');
+    cards.forEach(c => {
+      const show = btn.dataset.filter === 'all' || c.dataset.category === btn.dataset.filter;
+      gsap.to(c, { opacity: show ? 1 : 0, scale: show ? 1 : .92, duration: .35,
+        onStart() { if (show) c.style.display = ''; }, onComplete() { if (!show) c.style.display = 'none'; } });
+    });
+  }));
+
+  /* ---- Billing toggle ---- */
+  const bt = document.getElementById('billingToggle');
+  if (bt) bt.addEventListener('change', () => {
+    document.querySelectorAll('[data-m]').forEach(el => el.textContent = bt.checked ? el.dataset.a : el.dataset.m);
+    document.querySelectorAll('.bill-suffix').forEach(el => el.textContent = bt.checked ? '/mo · billed yearly' : '/month');
+  });
+
+  /* ---- Role toggle ---- */
+  document.querySelectorAll('.role-toggle').forEach(g => g.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    g.querySelectorAll('button').forEach(x => x.classList.remove('active')); b.classList.add('active');
+  })));
+
+  /* ---- Forms (+ optional redirect after success) ---- */
+  document.querySelectorAll('form.needs-validation').forEach(form => {
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      form.classList.add('was-validated');
+      if (!form.checkValidity()) return;
+      const btn = form.querySelector('[type=submit]'), orig = btn.innerHTML, go = form.dataset.redirect;
+      btn.disabled = true; btn.textContent = 'Please wait…';
+      setTimeout(() => {
+        if (go) { btn.textContent = 'Success — loading…'; location.href = go; return; }
+        btn.textContent = 'Done — thank you!';
+        setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; form.classList.remove('was-validated'); form.reset(); }, 2200);
+      }, 900);
+    });
+  });
+  document.querySelectorAll('.pw-toggle').forEach(b => b.addEventListener('click', () => {
+    const i = document.getElementById(b.dataset.target); if (!i) return;
+    i.type = i.type === 'password' ? 'text' : 'password'; b.textContent = i.type === 'password' ? 'Show' : 'Hide';
+  }));
+});
+
+function playHeroIntro() {
+  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  tl.from('.hero .eyebrow', { y: 20, opacity: 0, duration: .6 })
+    .from('.hero h1', { y: 60, opacity: 0, skewX: -8, duration: .9 }, '-=.35')
+    .from('.hero p.lead', { y: 30, opacity: 0, duration: .7 }, '-=.5')
+    .from('.hero-actions .btn', { y: 20, opacity: 0, duration: .5, stagger: .1 }, '-=.4')
+    .from('.hero-stats > div', { y: 20, opacity: 0, duration: .5, stagger: .1 }, '-=.3')
+    .from('.hero-photo', { xPercent: 12, opacity: 0, duration: 1.1 }, '-=1.2')
+    .from('.hero-float', { y: 30, opacity: 0, duration: .7, stagger: .15 }, '-=.5')
+    .from('.page-hero .crumb,.page-hero .eyebrow,.page-hero h1,.page-hero p', { y: 30, opacity: 0, duration: .7, stagger: .08 }, 0);
+}
+</script><script>
+/* ---- Remember scroll position so the 404 "Back to previous" button returns exactly ---- */
+(function () {
+  try {
+    var key = 'stackly:scroll:' + location.pathname + location.search;
+    var saved = sessionStorage.getItem(key);
+    if (saved !== null && document.referrer && document.referrer.indexOf('404.html') !== -1) {
+      sessionStorage.removeItem(key);
+      var y = parseInt(saved, 10) || 0;
+      var el = document.documentElement, prev = el.style.scrollBehavior;
+      el.style.scrollBehavior = 'auto';
+      var restore = function () { window.scrollTo(0, y); };
+      restore();
+      window.addEventListener('load', restore);
+      setTimeout(function () { restore(); el.style.scrollBehavior = prev; }, 60);
+    }
+    window.addEventListener('pagehide', function () {
+      try { sessionStorage.setItem('stackly:scroll:' + location.pathname + location.search, String(window.scrollY || window.pageYOffset || 0)); } catch (e) {}
+    });
+  } catch (e) {}
+})();
+</script>
+</body></html>

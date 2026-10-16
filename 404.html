@@ -1,0 +1,97 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Page not found — Stackly Sports Academy</title><meta name="description" content="The page you were looking for has moved, retired, or never made it off the start line."><meta name="robots" content="noindex"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Barlow:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M8 4h6l-4 24H4z' fill='%23E2492B'/%3E%3Cpath d='M16 4h6l-4 24h-6z' fill='%23F3F1EA'/%3E%3Cpath d='M24 4h6l-4 24h-6z' fill='%23D4FF3F'/%3E%3C/svg%3E"><style>
+:root{
+  --ink:#0D0E11; --ink-2:#16181D; --ink-3:#20232A;
+  --chalk:#F3F1EA; --chalk-dim:#E7E4DA; --white:#fff;
+  --clay:#E2492B; --clay-dark:#B9341A; --volt:#D4FF3F; --volt-dark:#A9D100;
+  --steel:#6B7078; --line:rgba(13,14,17,.12); --line-dark:rgba(243,241,234,.14);
+  --font-display:"Barlow Condensed","Arial Narrow",sans-serif;
+  --font-body:"Barlow",-apple-system,sans-serif;
+  --font-mono:"DM Mono",monospace;
+  --ease-out:cubic-bezier(.16,1,.3,1); --ease-soft:cubic-bezier(.65,0,.35,1);
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden;width:100%;max-width:100%}
+body{font-family:var(--font-body);background:var(--ink);color:var(--chalk);margin:0;overflow-x:hidden;width:100%;max-width:100%;position:relative;-webkit-font-smoothing:antialiased;font-size:1.02rem}
+::selection{background:var(--volt);color:var(--ink)}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:800;font-style:italic;text-transform:uppercase;letter-spacing:.01em;line-height:1.02;color:var(--chalk)}
+:focus-visible{outline:2px solid var(--clay);outline-offset:3px}
+.container-xl{max-width:1280px;margin:0 auto;padding:0 24px}
+.eyebrow{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--volt);display:inline-flex;align-items:center;gap:10px;margin-bottom:16px}
+.eyebrow::before{content:"";width:30px;height:3px;background:var(--volt);transform:skewX(-30deg)}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--font-display);font-weight:800;font-style:italic;text-transform:uppercase;letter-spacing:.06em;font-size:1rem;padding:13px 30px;border:2px solid transparent;cursor:pointer;transition:transform .3s var(--ease-out),box-shadow .3s,background .3s,color .3s,border-color .3s;white-space:nowrap;clip-path:polygon(8% 0,100% 0,92% 100%,0 100%)}
+.btn:active{transform:scale(.96)}
+.btn-volt{background:var(--volt);color:var(--ink);border:0}
+.btn-volt:hover{background:var(--volt-dark);color:var(--ink)}
+.btn-ghost{background:rgba(243,241,234,.1);color:var(--chalk);border:0}
+.btn-ghost:hover{background:var(--chalk);color:var(--ink)}
+.btn-sm{padding:9px 22px;font-size:.9rem}
+
+/* ---------- 404 ---------- */
+.err-wrap{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;background:var(--ink);padding:70px 0}
+.lane-bg{position:absolute;inset:0;overflow:hidden;background:repeating-linear-gradient(105deg,transparent 0 78px,rgba(243,241,234,.045) 78px 81px);pointer-events:none}
+.err-wrap::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:70px;background:var(--ink-2);clip-path:polygon(0 100%,100% 0,100% 100%)}
+.err-inner{position:relative;z-index:2}
+.err-code{font-family:var(--font-display);font-weight:800;font-style:italic;font-size:clamp(6rem,24vw,15rem);line-height:.82;color:transparent;-webkit-text-stroke:2px var(--volt);letter-spacing:-.02em}
+.err-wrap h1{font-size:clamp(2.2rem,5.5vw,4rem);margin:8px 0 0}
+.err-wrap h1 .clay{color:var(--clay)}
+.err-wrap p{color:rgba(243,241,234,.7);max-width:520px;font-size:1.1rem;margin:18px 0 0}
+.err-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:36px}
+.err-crumb{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(243,241,234,.45);margin-top:36px}
+.err-crumb a{color:inherit;transition:color .2s;border-bottom:1px solid transparent}
+.err-crumb a:hover{color:var(--volt);border-bottom-color:var(--volt)}
+</style></head><body>
+<main class="err-wrap"><div class="lane-bg"></div>
+  <div class="container-xl err-inner">
+    <div class="eyebrow">Error 404</div>
+    <div class="err-code">404</div>
+    <h1>This lane leads <span class="clay">nowhere.</span></h1>
+    <p>The page you're looking for has moved, retired, or never made it off the start line. Let's get you back on track.</p>
+    <div class="err-actions">
+      <a href="index.html" class="btn btn-volt">Go to home</a>
+      <button type="button" class="btn btn-ghost" id="backBtn">Back to previous</button>
+    </div>
+    <div class="err-crumb"><a href="index.html">Home</a> / 404 — Page not found</div>
+  </div>
+</main>
+<script>
+  (function () {
+    var back = document.getElementById('backBtn');
+    if (!back) return;
+    function fallbackTarget() {
+      function bad(url) { return !url || url.indexOf('404.html') !== -1; }
+      var from = null;
+      try { from = new URLSearchParams(window.location.search).get('from'); } catch (err) {}
+      if (!bad(from)) return from;
+      if (!bad(document.referrer)) return document.referrer;
+      return 'index.html';
+    }
+
+    back.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      // Prefer real browser history: it restores the exact page AND scroll position.
+      if (window.history.length > 1) {
+        var left = false;
+        window.addEventListener('pagehide', function () { left = true; });
+        window.addEventListener('beforeunload', function () { left = true; });
+        window.history.back();
+        // If there was no usable history entry, fall back to the known origin.
+        setTimeout(function () {
+          if (!left && window.location.pathname.indexOf('404.html') !== -1) {
+            window.location.href = fallbackTarget();
+          }
+        }, 450);
+        return;
+      }
+
+      // No history (e.g. opened in a new tab): go to the page that linked here.
+      window.location.href = fallbackTarget();
+    });
+  })();
+</script>
+</body></html>
